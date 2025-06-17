@@ -80,13 +80,4 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
 
-    @Scheduled(cron = "0 0/1 * * * *")
-    public void notifyTG(){
-        List<NotificationTaskEntity> allNotifications = notificationTaskService.getByLocalDateTime();
-        allNotifications.forEach(entity -> {
-            telegramBot.execute(new SendMessage(entity.getChatId(), entity.getMessage()));
-            allNotifications.remove(entity);
-        });
-    }
-
 }
